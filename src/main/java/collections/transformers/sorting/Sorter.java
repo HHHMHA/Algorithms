@@ -1,4 +1,4 @@
-package sorting;
+package collections.transformers.sorting;
 
 public abstract class Sorter {
     public static Sorter fromAlgorithm( SortingAlgorithm sortingAlgorithm ) {

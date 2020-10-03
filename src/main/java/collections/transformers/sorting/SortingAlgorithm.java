@@ -1,4 +1,4 @@
-package sorting;
+package collections.transformers.sorting;
 
 public enum SortingAlgorithm {
     INSERTION_SORT,

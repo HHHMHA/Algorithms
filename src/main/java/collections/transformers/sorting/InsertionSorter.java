@@ -1,4 +1,4 @@
-package sorting;
+package collections.transformers.sorting;
 
 class InsertionSorter extends Sorter {
     @Override

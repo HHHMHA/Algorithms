@@ -2,21 +2,21 @@ package collections.transformers.sorting;
 
 public class MergeSorter extends Sorter {
     @Override
-    void sortWithAlgorithm( int[] sortable ) {
-        mergeSort( sortable, 0, sortable.length - 1 );
+    void sortWithAlgorithm() {
+        mergeSort( 0, sortable.length - 1 );
     }
 
-    private void mergeSort( int[] sortable, int start, int end ) {
+    private void mergeSort( int start, int end ) {
         if ( start >= end )
             return;
 
-        int middle = ( start + end ) / 2;
-        mergeSort( sortable, start, middle );
-        mergeSort( sortable, middle + 1, end );
-        mergeSortedHalves( sortable, start, middle, end );
+        int middle = start + ( end - start ) / 2;
+        mergeSort( start, middle );
+        mergeSort( middle + 1, end );
+        mergeSortedHalves( start, middle, end );
     }
 
-    private void mergeSortedHalves( int[] sortable, int start, int middle, int end ) {
+    private void mergeSortedHalves( int start, int middle, int end ) {
         int lengthOfLeft = middle - start + 1;
         int[] left = copyArray( sortable, lengthOfLeft, start );
 

@@ -1,6 +1,8 @@
 package collections.transformers.sorting;
 
 public abstract class Sorter {
+    protected int[] sortable;
+
     public static Sorter fromAlgorithm( SortingAlgorithm sortingAlgorithm ) {
         switch ( sortingAlgorithm ) {
             case MERGE_SORT:
@@ -13,12 +15,12 @@ public abstract class Sorter {
     }
 
     public int[] sort( int[] sortable ) {
-        int[] sortableCopy = copyArray( sortable, sortable.length, 0 );
-        sortWithAlgorithm( sortableCopy );
-        return sortableCopy;
+        this.sortable = copyArray( sortable, sortable.length, 0 );
+        sortWithAlgorithm();
+        return this.sortable;
     }
 
-    abstract void sortWithAlgorithm( int[] sortable );
+    abstract void sortWithAlgorithm();
 
     int[] copyArray( int[] original, int lengthOfCopy, int startIndex ) {
         int[] copy = new int[ lengthOfCopy ];

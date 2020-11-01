@@ -5,19 +5,19 @@ public class HeapSorter extends Sorter {
     private int heapSize;
 
     @Override
-    void sortWithAlgorithm( int[] sortable ) {
+    void sortWithAlgorithm() {
         heapSize = sortable.length;
-        buildMaxHeap( sortable );
+        buildMaxHeap();
         for ( int i = heapSize - 1; i > 0; --i ) {
             swap( sortable, 0, i );
             heapSize = heapSize - 1;
-            maxHeapify( sortable, 0 );
+            maxHeapify( 0 );
         }
     }
 
-    private void buildMaxHeap( int[] heap ) {
-        for ( int i = parent( heap.length - 1 ); i >= 0; --i )
-            maxHeapify( heap, i );
+    private void buildMaxHeap() {
+        for ( int i = parent( sortable.length - 1 ); i >= 0; --i )
+            maxHeapify( i );
     }
 
     private int parent( int i ) {
@@ -38,20 +38,20 @@ public class HeapSorter extends Sorter {
         sortable[ y ] = temp;
     }
 
-    private void maxHeapify( int[] heap, int root ) {
-        int max = root;
-        int left = left( root );
-        int right = right( root );
+    private void maxHeapify( int rootIndex ) {
+        int maxIndex = rootIndex;
+        int leftIndex = left( rootIndex );
+        int rightIndex = right( rootIndex );
 
-        if ( left < heapSize && heap[ left ] > heap[ max ] )
-            max = left;
-        if ( right < heapSize && heap[ right ] > heap[ max ] )
-            max = right;
+        if ( leftIndex < heapSize && sortable[ leftIndex ] > sortable[ maxIndex ] )
+            maxIndex = leftIndex;
+        if ( rightIndex < heapSize && sortable[ rightIndex ] > sortable[ maxIndex ] )
+            maxIndex = rightIndex;
 
-        if ( max == root )
+        if ( maxIndex == rootIndex )
             return;
 
-        swap( heap, root, max );
-        maxHeapify( heap, max );
+        swap( sortable, rootIndex, maxIndex );
+        maxHeapify( maxIndex );
     }
 }

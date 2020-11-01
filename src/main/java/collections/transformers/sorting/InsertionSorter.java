@@ -2,15 +2,16 @@ package collections.transformers.sorting;
 
 class InsertionSorter extends Sorter {
     @Override
-    void sortWithAlgorithm( int[] sortable ) {
+    void sortWithAlgorithm() {
         for ( int unsortedIndex = 1; unsortedIndex < sortable.length; ++unsortedIndex ) {
             int elementToInsert = sortable[ unsortedIndex ];
-            int insertionIndex = getInsertionIndexAndShiftElements( sortable, unsortedIndex, elementToInsert );
+            int insertionIndex = getInsertionIndexAndShiftElements( unsortedIndex );
             sortable[ insertionIndex ] = elementToInsert;
         }
     }
 
-    private int getInsertionIndexAndShiftElements( int[] sortable, int unsortedIndex, int elementToInsert ) {
+    private int getInsertionIndexAndShiftElements( int unsortedIndex ) {
+        int elementToInsert = sortable[ unsortedIndex ];
         int insertionIndex = unsortedIndex - 1;
         for ( ; insertionIndex >= 0 && sortable[ insertionIndex ] > elementToInsert; --insertionIndex ) {
             shiftRight( sortable, insertionIndex );

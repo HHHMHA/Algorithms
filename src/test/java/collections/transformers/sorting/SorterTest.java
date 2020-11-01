@@ -26,6 +26,15 @@ public class SorterTest {
         assertArraySorted( actual );
     }
 
+    @Test
+    void testHeapSortOnArray() {
+        Sorter sorter = Sorter.fromAlgorithm( SortingAlgorithm.HEAP_SORT );
+        int[] actual = sorter.sort( randomArrayOfInts );
+        assertTrue( sorter instanceof HeapSorter );
+
+        assertArraySorted( actual );
+    }
+
     private void assertArraySorted( int[] actual ) {
         assertArrayEquals( sortedRandomArrayOfInts, actual );
         assertArrayEquals( new int[]{ 2, 3, -2, 1, 4, 0 }, randomArrayOfInts ); // The Algorithm didn't modify the original array

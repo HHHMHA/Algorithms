@@ -5,6 +5,8 @@ public abstract class Sorter {
         switch ( sortingAlgorithm ) {
             case MERGE_SORT:
                 return new MergeSorter();
+            case HEAP_SORT:
+                return new HeapSorter();
             default: // TODO later once I have more than this
                 return new InsertionSorter();
         }

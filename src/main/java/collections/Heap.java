@@ -18,9 +18,28 @@ public abstract class Heap {
 
     public abstract void add( int element );
 
-    protected abstract void fixTail();
+    protected void fixTail() {
+        int i = size() - 1;
+        while ( nodeParentBreaksProperty( i ) ) {
+            swap( i );
+            i = parent( i );
+        }
+    }
 
-    protected abstract boolean nodeBreaksPropertyFromAbove( int nodeIndex );
+    protected abstract void swap( int i );
+
+    /**
+     * Checks if a node breaks the heap property from above which means that
+     * all of the current node descendants satisfy the property
+     * but the node's parent does not
+     * @param nodeIndex The index of the node.
+     * @return True if the node's parent breaks the property with the current node
+     */
+    protected abstract boolean nodeParentBreaksProperty(int nodeIndex );
+
+    protected boolean hasParent(int nodeIndex) {
+        return nodeIndex != 0;
+    }
 
     public abstract int top();
 

@@ -21,24 +21,55 @@ public class ArrayHeap extends Heap {
     }
 
     @Override
-    protected void swap( int i ) {
-        Collections.swap( elements, i , parent( i ) );
+    protected void heapify( int index ) {
+        int currentIndex = index;
+        int leftIndex = leftChildIndex( currentIndex );
+        int rightIndex = rightChildIndex( currentIndex );
+
+        if ( leftIndex < size() && compare( elements.get( leftIndex ), elements.get( currentIndex ) ) > 0 )
+            currentIndex = leftIndex;
+        if ( rightIndex < size() && compare( elements.get( rightIndex ), elements.get( currentIndex ) ) > 0 )
+            currentIndex = rightIndex;
+
+        if ( currentIndex == index )
+            return;
+
+        swap( currentIndex, index );
+        heapify( currentIndex );
+    }
+
+    @Override
+    protected void swap( int firstIndex, int secondIndex ) {
+        Collections.swap( elements, firstIndex, secondIndex );
     }
 
     @Override
     protected boolean nodeParentBreaksProperty( int nodeIndex ) {
         Integer nodeValue = elements.get( nodeIndex );
-        Integer parentNodeValue = elements.get( parent( nodeIndex ) );
+        Integer parentNodeValue = elements.get( parentIndex( nodeIndex ) );
         return hasParent( nodeIndex ) && compare( nodeValue, parentNodeValue ) > 0;
     }
 
     @Override
-    public int top() {
-        return elements.get( 0 );
+    public Integer top() {
+        return empty() ? null : elements.get( 0 );
     }
 
     @Override
     public int size() {
         return elements.size();
+    }
+
+    @Override
+    public Integer extractTop() {
+        Integer top = top();
+        if ( empty() )
+            return top;
+
+        elements.set( 0, elements.get( size() - 1 ) );
+        elements.remove( size() - 1 );
+        heapify( 0 );
+
+        return top;
     }
 }

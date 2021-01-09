@@ -21,12 +21,14 @@ public abstract class Heap {
     protected void fixTail() {
         int i = size() - 1;
         while ( nodeParentBreaksProperty( i ) ) {
-            swap( i );
-            i = parent( i );
+            swap( i, parentIndex( i ) );
+            i = parentIndex( i );
         }
     }
 
-    protected abstract void swap( int i );
+    protected abstract void heapify( int index );
+
+    protected abstract void swap( int firstIndex, int secondIndex );
 
     /**
      * Checks if a node breaks the heap property from above which means that
@@ -35,15 +37,21 @@ public abstract class Heap {
      * @param nodeIndex The index of the node.
      * @return True if the node's parent breaks the property with the current node
      */
-    protected abstract boolean nodeParentBreaksProperty(int nodeIndex );
+    protected abstract boolean nodeParentBreaksProperty( int nodeIndex );
 
     protected boolean hasParent(int nodeIndex) {
         return nodeIndex != 0;
     }
 
-    public abstract int top();
+    public abstract Integer top();
 
     public abstract int size();
+
+    public boolean empty() {
+        return size() == 0;
+    }
+
+    public abstract Integer extractTop();
 
     public enum Property { MAX, MIN }
 
@@ -51,15 +59,15 @@ public abstract class Heap {
         return comparator.compare( x, y );
     }
 
-    protected int parent( int childIndex ) {
+    protected int parentIndex( int childIndex ) {
         return ( childIndex - 1 ) / 2;
     }
 
-    protected int leftChild( int parentIndex ) {
+    protected int leftChildIndex( int parentIndex ) {
         return parentIndex * 2 + 1;
     }
 
-    protected int rightChild( int parentIndex ) {
+    protected int rightChildIndex( int parentIndex ) {
         return parentIndex * 2 + 2;
     }
 }

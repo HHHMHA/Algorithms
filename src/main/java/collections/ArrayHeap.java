@@ -72,4 +72,18 @@ public class ArrayHeap extends Heap {
 
         return top;
     }
+
+    @Override
+    public void increaseKey( int oldValue, int newValue ) {
+        int targetKey = elements.indexOf( oldValue );
+
+        if ( targetKey == -1 )
+            return;
+
+        if ( compare(newValue, oldValue ) != 1 )
+            return;
+
+        elements.set( targetKey, newValue );
+        fixParents( targetKey );
+    }
 }

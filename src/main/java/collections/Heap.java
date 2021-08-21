@@ -18,12 +18,16 @@ public abstract class Heap {
 
     public abstract void add( int element );
 
-    protected void fixTail() {
-        int i = size() - 1;
-        while ( nodeParentBreaksProperty( i ) ) {
-            swap( i, parentIndex( i ) );
-            i = parentIndex( i );
+    protected void fixParents( int childIndex ) {
+        int index = childIndex;
+        while ( nodeParentBreaksProperty( index ) ) {
+            swap( index, parentIndex( index ) );
+            index = parentIndex( index );
         }
+    }
+
+    protected void fixTail() {
+        fixParents( size() - 1 );
     }
 
     protected abstract void heapify( int index );
@@ -52,6 +56,8 @@ public abstract class Heap {
     }
 
     public abstract Integer extractTop();
+
+    public abstract void increaseKey( int oldValue, int newValue );
 
     public enum Property { MAX, MIN }
 

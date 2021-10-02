@@ -35,6 +35,15 @@ public class SorterTest {
         assertArraySorted( actual );
     }
 
+    @Test
+    void testQuickSortOnArray() {
+        Sorter sorter = Sorter.fromAlgorithm( SortingAlgorithm.QUICK_SORT );
+        int[] actual = sorter.sort( randomArrayOfInts );
+        assertTrue( sorter instanceof QuickSorter );
+
+        assertArraySorted( actual );
+    }
+
     private void assertArraySorted( int[] actual ) {
         assertArrayEquals( sortedRandomArrayOfInts, actual );
         assertArrayEquals( new int[]{ 2, 3, -2, 1, 4, 0 }, randomArrayOfInts ); // The Algorithm didn't modify the original array

@@ -9,7 +9,9 @@ public abstract class Sorter {
                 return new MergeSorter();
             case HEAP_SORT:
                 return new HeapSorter();
-            default: // TODO later once I have more than this
+            case QUICK_SORT:
+                return new QuickSorter();
+            default:
                 return new InsertionSorter();
         }
     }
@@ -26,5 +28,11 @@ public abstract class Sorter {
         int[] copy = new int[ lengthOfCopy ];
         System.arraycopy( original, startIndex, copy, 0, lengthOfCopy );
         return copy;
+    }
+
+    void swap( int i, int j ) {
+        int tmp = this.sortable[ i ];
+        this.sortable[ i ] = this.sortable[ j ];
+        this.sortable[ j ] = tmp;
     }
 }

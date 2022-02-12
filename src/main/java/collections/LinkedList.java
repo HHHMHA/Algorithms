@@ -7,9 +7,7 @@ public class LinkedList implements List {
 
     @Override
     public void insert( int element, int index ) throws IndexOutOfBoundsException {
-        if ( index < 0 || index > size ) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIndexInInsertBounds( index );
 
         if ( index == 0 ) {
             insertFirst( element );
@@ -27,9 +25,22 @@ public class LinkedList implements List {
         ++size;
     }
 
+    private void checkIndexInInsertBounds( int index ) throws IndexOutOfBoundsException {
+        if ( index < 0 || index > size ) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    private void checkIndexInBounds( int index ) throws IndexOutOfBoundsException {
+        if ( isEmpty() || index < 0 || index >= size ) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
     private void insertFirst( int element ) {
         Node next = head;
         head = new Node( element, next, Node.nill );
+        next.setPrevious( head );
 
         if ( size == 0 )
             tail = head;
@@ -59,7 +70,29 @@ public class LinkedList implements List {
 
     @Override
     public void delete( int index ) {
+        checkIndexInBounds( index );
 
+        var node = getNode( index );
+        var previous = node.getPrevious();
+        var next = node.getNext();
+
+        if ( previous != Node.nill ) {
+            previous.setNext( next );
+        }
+
+        if ( next != Node.nill ) {
+            next.setPrevious( previous );
+        }
+
+        if ( node == head ) {
+            head = next;
+        }
+
+        if ( node == tail ) {
+            tail = previous;
+        }
+
+        --size;
     }
 
     @Override
@@ -75,6 +108,7 @@ public class LinkedList implements List {
 
     @Override
     public int get( int index ) {
+        checkIndexInBounds( index );
         return getNode( index ).getValue();
     }
 

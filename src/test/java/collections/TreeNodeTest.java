@@ -26,9 +26,10 @@ class TreeNodeTest {
         assertEquals( TreeNode.nill, node.getLeft() );
         assertEquals( TreeNode.nill, node.getRight() );
 
-        TreeNode leftAndRightNode = new TreeNode( 2, node, node );
+        TreeNode leftAndRightNode = new TreeNode( 2, node, node, node );
         assertEquals( 2, leftAndRightNode.getValue() );
         assertEquals( node, leftAndRightNode.getLeft() );
         assertEquals( node, leftAndRightNode.getRight() );
+        assertEquals( node, leftAndRightNode.getParent() );
     }
 }

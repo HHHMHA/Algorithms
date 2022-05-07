@@ -6,21 +6,24 @@ public class TreeNode {
     private Integer value;
     private TreeNode left;
     private TreeNode right;
+    private TreeNode parent;
 
     private TreeNode() {
         left = null;
         right = null;
+        parent = null;
         value = null;
     }
 
-    public TreeNode( int value, TreeNode next, TreeNode previous ) {
+    public TreeNode( int value, TreeNode left, TreeNode right, TreeNode parent ) {
         this.value = value;
-        this.left = next;
-        this.right = previous;
+        this.left = left;
+        this.right = right;
+        this.parent = parent;
     }
 
     public TreeNode( int value ) {
-        this( value, nill, nill );
+        this( value, nill, nill, nill );
     }
 
     public void setLeft( TreeNode left ) {
@@ -29,6 +32,10 @@ public class TreeNode {
 
     public void setRight( TreeNode right ) {
         this.right = right;
+    }
+
+    public void setParent( TreeNode parent ) {
+        this.parent = parent;
     }
 
     public Integer getValue() {
@@ -41,5 +48,9 @@ public class TreeNode {
 
     public TreeNode getRight() {
         return right;
+    }
+
+    public TreeNode getParent() {
+        return parent;
     }
 }

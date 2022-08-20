@@ -24,22 +24,32 @@ public class SearchTree implements Tree {
 
     @Override
     public TreeNode max() {
-        return null;
+        return max( root );
     }
 
     @Override
     public TreeNode max( TreeNode node ) {
-        return null;
+        if ( node == TreeNode.nill )
+            return node;
+
+        while ( node.getRight() != TreeNode.nill )
+            node = node.getRight();
+        return node;
     }
 
     @Override
     public TreeNode min() {
-        return null;
+        return min( root );
     }
 
     @Override
     public TreeNode min( TreeNode node ) {
-        return null;
+        if ( node == TreeNode.nill )
+            return node;
+
+        while ( node.getLeft() != TreeNode.nill )
+            node = node.getLeft();
+        return node;
     }
 
     @Override

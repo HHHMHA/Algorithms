@@ -54,7 +54,21 @@ public class SearchTree implements Tree {
 
     @Override
     public TreeNode successor( TreeNode node ) {
-        return null;
+        if (node == TreeNode.nill) {
+            return TreeNode.nill;
+        }
+
+        if ( node.getRight() != TreeNode.nill ) {
+            return min( node.getRight() );
+        }
+
+        var parent = node.getParent();
+        while (parent != TreeNode.nill && parent.getRight() == node) {
+            node = parent;
+            parent = node.getParent();
+        }
+
+        return parent;
     }
 
     @Override

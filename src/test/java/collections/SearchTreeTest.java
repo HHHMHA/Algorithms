@@ -46,7 +46,7 @@ class SearchTreeTest {
     }
 
     @Test
-    void max_param() {
+    void maxWithParam() {
         Tree t = new SearchTree();
         assertEquals( TreeNode.nill, t.max( TreeNode.nill ) );
 
@@ -76,7 +76,7 @@ class SearchTreeTest {
     }
 
     @Test
-    void min_param() {
+    void minWithParam() {
         Tree t = new SearchTree();
         assertEquals( TreeNode.nill, t.min( TreeNode.nill ) );
 
@@ -91,7 +91,64 @@ class SearchTreeTest {
     }
 
     @Test
-    void successor() {
+    void successorRightNodeFull() {
+        Tree t = new SearchTree();
+        assertEquals( TreeNode.nill, t.successor( TreeNode.nill ) );
+
+        t.insert( 5 );
+        t.insert( 10 );
+        t.insert( 7 );
+        t.insert( 20 );
+        t.insert( 3 );
+        t.insert( 4 );
+        t.insert( 1 );
+        t.insert( 6 );
+
+        var node = t.find( 5 );
+        var successor = t.successor( node );
+        var actualSuccessor = t.find( 6 );
+        assertEquals( actualSuccessor, successor );
+    }
+
+    @Test
+    void successorNoRightNode() {
+        Tree t = new SearchTree();
+        assertEquals( TreeNode.nill, t.successor( TreeNode.nill ) );
+
+        t.insert( 5 );
+        t.insert( 10 );
+        t.insert( 7 );
+        t.insert( 20 );
+        t.insert( 3 );
+        t.insert( 4 );
+        t.insert( 1 );
+        t.insert( 6 );
+        t.insert( 8 );
+
+        var node = t.find( 8 );
+        var successor = t.successor( node );
+        var actualSuccessor = t.find( 10 );
+        assertEquals( actualSuccessor, successor );
+    }
+
+    @Test
+    void successorNoSuccessor() {
+        Tree t = new SearchTree();
+        assertEquals( TreeNode.nill, t.successor( TreeNode.nill ) );
+
+        t.insert( 5 );
+        t.insert( 10 );
+        t.insert( 7 );
+        t.insert( 3 );
+        t.insert( 4 );
+        t.insert( 1 );
+        t.insert( 6 );
+        t.insert( 8 );
+
+        var node = t.find( 10 );
+        var successor = t.successor( node );
+        var actualSuccessor = TreeNode.nill;
+        assertEquals( actualSuccessor, successor );
     }
 
     @Test

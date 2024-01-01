@@ -53,4 +53,11 @@ public class TreeNode {
     public TreeNode getParent() {
         return parent;
     }
+
+    @Override
+    public String toString() {
+        return "TreeNode{" +
+                "value=" + value +
+                '}';
+    }
 }

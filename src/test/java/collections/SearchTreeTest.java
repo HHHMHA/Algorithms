@@ -152,7 +152,57 @@ class SearchTreeTest {
     }
 
     @Test
-    void predecessor() {
+    void predecessorLeftNodeFull() {
+        Tree t = new SearchTree();
+        assertEquals( TreeNode.nill, t.predecessor( TreeNode.nill ) );
+
+        t.insert( 5 );
+        t.insert( 10 );
+        t.insert( 7 );
+        t.insert( 20 );
+        t.insert( 3 );
+        t.insert( 4 );
+        t.insert( 1 );
+        t.insert( 6 );
+
+        var node = t.find( 5 );
+        var predecessor = t.predecessor( node );
+        var actualPredecessor = t.find( 1 );
+        assertEquals( actualPredecessor, predecessor );
+    }
+
+    @Test
+    void predecessorNoLeftNode() {
+        Tree t = new SearchTree();
+        assertEquals( TreeNode.nill, t.predecessor( TreeNode.nill ) );
+
+        t.insert( 5 );
+        t.insert( 1 );
+        t.insert( 10 );
+        t.insert( 20 );
+        t.insert( 15 );
+
+        var node = t.find( 10 );
+        var predecessor = t.predecessor( node );
+        var actualPredecessor = t.find( 5 );
+        assertEquals( actualPredecessor, predecessor );
+    }
+
+    @Test
+    void predecessorNoPredecessor() {
+        Tree t = new SearchTree();
+        assertEquals( TreeNode.nill, t.predecessor( TreeNode.nill ) );
+
+        t.insert( 5 );
+        t.insert( 10 );
+        t.insert( 7 );
+        t.insert( 20 );
+        t.insert( 6 );
+
+        var node = t.find( 5 );
+        var predecessor = t.predecessor( node );
+        var actualPredecessor = TreeNode.nill;
+        assertEquals( actualPredecessor, predecessor );
     }
 
     @Test

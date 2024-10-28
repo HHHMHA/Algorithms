@@ -1,6 +1,7 @@
 package collections;
 
 import org.junit.jupiter.api.Test;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -332,5 +333,128 @@ class SearchTreeTest {
         assertEquals(2, t.find(2).getValue());
         assertEquals(4, t.find(4).getValue());
         assertEquals(6, t.find(6).getValue());
+
+        TreeNode suc = t.find(4);
+        assertEquals(t.find(2), suc.getLeft());
+        assertEquals(TreeNode.nill, suc.getRight());
+        assertEquals(TreeNode.nill, suc.getRight());
+        assertEquals(t.find(5), suc.getParent());
+        assertEquals(t.find(5).getLeft(), suc);
+    }
+
+    @Test
+    void inorderWalkWhenTreeEmpty() {
+        Tree t = new SearchTree();
+        List<TreeNode> result = t.inorderWalk();
+        assertTrue(result.isEmpty(), "Inorder walk of an empty tree should return an empty list.");
+    }
+
+    @Test
+    void inorderWalkSingleElement() {
+        Tree t = new SearchTree();
+        t.insert(5);
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(1, result.size(), "Inorder walk of a tree with one element should return one node.");
+        assertEquals(5, result.get(0).getValue(), "The single node value should be 5.");
+    }
+
+    @Test
+    void inorderWalkMultipleElements() {
+        Tree t = new SearchTree();
+        t.insert(5);
+        t.insert(3);
+        t.insert(7);
+        t.insert(2);
+        t.insert(4);
+        t.insert(6);
+        t.insert(8);
+
+        List<TreeNode> result = t.inorderWalk();
+
+        assertEquals(7, result.size(), "Inorder walk should return 7 nodes.");
+        assertEquals(2, result.get(0).getValue(), "The first node should have value 2.");
+        assertEquals(3, result.get(1).getValue(), "The second node should have value 3.");
+        assertEquals(4, result.get(2).getValue(), "The third node should have value 4.");
+        assertEquals(5, result.get(3).getValue(), "The fourth node should have value 5.");
+        assertEquals(6, result.get(4).getValue(), "The fifth node should have value 6.");
+        assertEquals(7, result.get(5).getValue(), "The sixth node should have value 7.");
+        assertEquals(8, result.get(6).getValue(), "The seventh node should have value 8.");
+    }
+
+    @Test
+    void inorderWalkLeftSkewedTree() {
+        Tree t = new SearchTree();
+        t.insert(5);
+        t.insert(4);
+        t.insert(3);
+        t.insert(2);
+        t.insert(1);
+
+        List<TreeNode> result = t.inorderWalk();
+
+        assertEquals(5, result.size(), "Inorder walk of a left-skewed tree should return 5 nodes.");
+        for (int i = 0; i < 5; i++) {
+            assertEquals(i + 1, result.get(i).getValue(), "Node value should be in ascending order.");
+        }
+    }
+
+    @Test
+    void inorderWalkRightSkewedTree() {
+        Tree t = new SearchTree();
+        t.insert(1);
+        t.insert(2);
+        t.insert(3);
+        t.insert(4);
+        t.insert(5);
+
+        List<TreeNode> result = t.inorderWalk();
+
+        assertEquals(5, result.size(), "Inorder walk of a right-skewed tree should return 5 nodes.");
+        for (int i = 0; i < 5; i++) {
+            assertEquals(i + 1, result.get(i).getValue(), "Node value should be in ascending order.");
+        }
+    }
+
+    @Test
+    void inorderWalkBalancedTree() {
+        Tree t = new SearchTree();
+        t.insert(4);
+        t.insert(2);
+        t.insert(6);
+        t.insert(1);
+        t.insert(3);
+        t.insert(5);
+        t.insert(7);
+
+        List<TreeNode> result = t.inorderWalk();
+
+        assertEquals(7, result.size(), "Inorder walk of a balanced tree should return 7 nodes.");
+        for (int i = 0; i < 7; i++) {
+            assertEquals(i + 1, result.get(i).getValue(), "Node value should be in ascending order.");
+        }
+    }
+
+    @Test
+    void inorderWalkAfterDeletion() {
+        Tree t = new SearchTree();
+        t.insert(5);
+        t.insert(3);
+        t.insert(7);
+        t.insert(2);
+        t.insert(4);
+        t.insert(6);
+        t.insert(8);
+
+        t.delete(7);
+
+        List<TreeNode> result = t.inorderWalk();
+
+        assertEquals(6, result.size(), "Inorder walk after deletion should return 6 nodes.");
+        assertEquals(2, result.get(0).getValue(), "The first node should have value 2.");
+        assertEquals(3, result.get(1).getValue(), "The second node should have value 3.");
+        assertEquals(4, result.get(2).getValue(), "The third node should have value 4.");
+        assertEquals(5, result.get(3).getValue(), "The fourth node should have value 5.");
+        assertEquals(6, result.get(4).getValue(), "The fifth node should have value 6.");
+        assertEquals(8, result.get(5).getValue(), "The sixth node should have value 8.");
     }
 }

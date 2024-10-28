@@ -1,5 +1,11 @@
 package collections;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+// TODO: should really be called BinarySearchTree since we have B-Trees
 public class SearchTree implements Tree {
     private int size = 0;
     private TreeNode root = TreeNode.nill;
@@ -29,11 +35,9 @@ public class SearchTree implements Tree {
 
     @Override
     public TreeNode max(TreeNode node) {
-        if (node == TreeNode.nill)
-            return node;
+        if (node == TreeNode.nill) return node;
 
-        while (node.getRight() != TreeNode.nill)
-            node = node.getRight();
+        while (node.getRight() != TreeNode.nill) node = node.getRight();
         return node;
     }
 
@@ -44,11 +48,9 @@ public class SearchTree implements Tree {
 
     @Override
     public TreeNode min(TreeNode node) {
-        if (node == TreeNode.nill)
-            return node;
+        if (node == TreeNode.nill) return node;
 
-        while (node.getLeft() != TreeNode.nill)
-            node = node.getLeft();
+        while (node.getLeft() != TreeNode.nill) node = node.getLeft();
         return node;
     }
 
@@ -178,7 +180,9 @@ public class SearchTree implements Tree {
                 successor.getRight().setParent(successor.getParent());
             }
             successor.setLeft(nodeToDelete.getLeft());
-            successor.setRight(nodeToDelete.getRight());
+            if (nodeToDelete.getRight() != successor) {
+                successor.setRight(nodeToDelete.getRight());
+            }
             successor.setParent(parent);
             if (parent == TreeNode.nill) {
                 root = successor;
@@ -198,5 +202,28 @@ public class SearchTree implements Tree {
     @Override
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public List<TreeNode> inorderWalk() {
+        // https://medium.com/@amyhuajs/the-iterative-solution-to-inorder-tree-traversal-easily-explained-f25f09e5435b
+        List<TreeNode> result = new ArrayList<>();
+        Stack<TreeNode> callStack = new Stack<>();
+        TreeNode current = this.root;
+
+        while (true) {
+            while (current != TreeNode.nill) {
+                callStack.push(current);
+                current = current.getLeft();
+            }
+            if (callStack.size() == 0) break;
+            var lastCurrent = callStack.pop();
+            if (lastCurrent != TreeNode.nill) {
+                result.add(lastCurrent);
+                current = lastCurrent.getRight();
+            }
+        }
+
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package collections;
 
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -456,5 +457,195 @@ class SearchTreeTest {
         assertEquals(5, result.get(3).getValue(), "The fourth node should have value 5.");
         assertEquals(6, result.get(4).getValue(), "The fifth node should have value 6.");
         assertEquals(8, result.get(5).getValue(), "The sixth node should have value 8.");
+    }
+
+    @Test
+    void leftRotateOnRoot() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+
+        TreeNode node = t.find(10);
+        t.leftRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(3, result.size(), "Inorder walk after left rotating root should return 3 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(10, result.get(1).getValue(), "The second node should have value 10.");
+        assertEquals(15, result.get(2).getValue(), "The third node should have value 15.");
+    }
+
+    @Test
+    void leftRotateOnLeaf() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+
+        TreeNode node = t.find(15);
+        t.leftRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(3, result.size(), "Inorder walk after left rotating leaf should return 3 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(10, result.get(1).getValue(), "The second node should have value 10.");
+        assertEquals(15, result.get(2).getValue(), "The third node should have value 15.");
+    }
+
+    @Test
+    void leftRotateWithRightChildOnly() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+        t.insert(12);
+
+        TreeNode node = t.find(10);
+        t.leftRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(4, result.size(), "Inorder walk after left rotating node with right child only should return 4 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(10, result.get(1).getValue(), "The second node should have value 10.");
+        assertEquals(12, result.get(2).getValue(), "The third node should have value 12.");
+        assertEquals(15, result.get(3).getValue(), "The fourth node should have value 15.");
+    }
+
+    @Test
+    void leftRotateWithLeftChildOnly() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+        t.insert(13);
+        t.insert(17);
+
+        TreeNode node = t.find(10);
+        t.leftRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(5, result.size(), "Inorder walk after left rotating node with left child only should return 5 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(10, result.get(1).getValue(), "The second node should have value 10.");
+        assertEquals(13, result.get(2).getValue(), "The third node should have value 13.");
+        assertEquals(15, result.get(3).getValue(), "The fourth node should have value 15.");
+        assertEquals(17, result.get(4).getValue(), "The fifth node should have value 17.");
+    }
+
+    @Test
+    void leftRotateWithChildren() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+        t.insert(12);
+        t.insert(18);
+
+        TreeNode node = t.find(10);
+        t.leftRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(5, result.size(), "Inorder walk after left rotating node with children should return 5 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(10, result.get(1).getValue(), "The second node should have value 10.");
+        assertEquals(12, result.get(2).getValue(), "The third node should have value 12.");
+        assertEquals(15, result.get(3).getValue(), "The fourth node should have value 15.");
+        assertEquals(18, result.get(4).getValue(), "The fifth node should have value 18.");
+    }
+
+    // Right Rotate Tests
+
+    @Test
+    void rightRotateOnRoot() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+
+        TreeNode node = t.find(15);
+        t.rightRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(3, result.size(), "Inorder walk after right rotating root should return 3 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(10, result.get(1).getValue(), "The second node should have value 10.");
+        assertEquals(15, result.get(2).getValue(), "The third node should have value 15.");
+    }
+
+    @Test
+    void rightRotateOnLeaf() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+
+        TreeNode node = t.find(5);
+        t.rightRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(3, result.size(), "Inorder walk after right rotating leaf should return 3 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(10, result.get(1).getValue(), "The second node should have value 10.");
+        assertEquals(15, result.get(2).getValue(), "The third node should have value 15.");
+    }
+
+    @Test
+    void rightRotateWithLeftChildOnly() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+        t.insert(3);
+
+        TreeNode node = t.find(10);
+        t.rightRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(4, result.size(), "Inorder walk after right rotating node with left child only should return 4 nodes.");
+        assertEquals(3, result.get(0).getValue(), "The first node should have value 3.");
+        assertEquals(5, result.get(1).getValue(), "The second node should have value 5.");
+        assertEquals(10, result.get(2).getValue(), "The third node should have value 10.");
+        assertEquals(15, result.get(3).getValue(), "The fourth node should have value 15.");
+    }
+
+    @Test
+    void rightRotateWithRightChildOnly() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+        t.insert(7);
+
+        TreeNode node = t.find(10);
+        t.rightRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(4, result.size(), "Inorder walk after right rotating node with right child only should return 4 nodes.");
+        assertEquals(5, result.get(0).getValue(), "The first node should have value 5.");
+        assertEquals(7, result.get(1).getValue(), "The second node should have value 7.");
+        assertEquals(10, result.get(2).getValue(), "The third node should have value 10.");
+        assertEquals(15, result.get(3).getValue(), "The fourth node should have value 15.");
+    }
+
+    @Test
+    void rightRotateWithChildren() {
+        Tree t = new SearchTree();
+        t.insert(10);
+        t.insert(5);
+        t.insert(15);
+        t.insert(3);
+        t.insert(7);
+
+        TreeNode node = t.find(10);
+        t.rightRotate(node);
+
+        List<TreeNode> result = t.inorderWalk();
+        assertEquals(5, result.size(), "Inorder walk after right rotating node with children should return 5 nodes.");
+        assertEquals(3, result.get(0).getValue(), "The first node should have value 3.");
+        assertEquals(5, result.get(1).getValue(), "The second node should have value 5.");
+        assertEquals(7, result.get(2).getValue(), "The third node should have value 7.");
+        assertEquals(10, result.get(3).getValue(), "The fourth node should have value 10.");
+        assertEquals(15, result.get(4).getValue(), "The fifth node should have value 15.");
     }
 }

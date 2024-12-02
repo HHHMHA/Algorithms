@@ -28,4 +28,7 @@ public interface Tree {
     }
 
     List<TreeNode> inorderWalk();
+
+    void leftRotate(TreeNode node);
+    void rightRotate(TreeNode node);
 }

@@ -226,4 +226,60 @@ public class SearchTree implements Tree {
 
         return result;
     }
+
+    @Override
+    public void leftRotate(TreeNode node) {
+        if (node == TreeNode.nill) return;
+
+        TreeNode rightChild = node.getRight();
+
+        // first we set the parent of the node to the new child
+        if (!setChildAsParent(node, rightChild)) return;
+
+        // now we need to set the left child of the right child because it will be replaced by original node
+        TreeNode rightLeftChild = rightChild.getLeft();
+        if (rightLeftChild != TreeNode.nill) rightLeftChild.setParent(node);
+        node.setRight(rightLeftChild);
+
+        // now we set the relation between node and the right child as they swap their relation
+        node.setParent(rightChild);
+        rightChild.setLeft(node);
+    }
+
+    private boolean setChildAsParent(TreeNode node, TreeNode childNode) {
+        if (!node.isChild(childNode)) return false;
+
+        TreeNode parent = node.getParent();
+
+        childNode.setParent(parent);
+        if (parent != TreeNode.nill) {
+            if (node.isRightChild()) {
+                parent.setRight(childNode);
+            } else {
+                parent.setLeft(childNode);
+            }
+        } else {
+            root = childNode;
+        }
+        return true;
+    }
+
+    @Override
+    public void rightRotate(TreeNode node) {
+        if (node == TreeNode.nill) return;
+
+        TreeNode leftChild = node.getLeft();
+
+        // first we set the parent of the node to the new child
+        if (!setChildAsParent(node, leftChild)) return;
+
+        // now we need to set the right child of the left child because it will be replaced by original node
+        TreeNode leftRightChild = leftChild.getRight();
+        if (leftRightChild != TreeNode.nill) leftRightChild.setParent(node);
+        node.setLeft(leftRightChild);
+
+        // now we set the relation between node and the right child as they swap their relation
+        node.setParent(leftChild);
+        leftChild.setRight(node);
+    }
 }

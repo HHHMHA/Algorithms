@@ -7,8 +7,8 @@ import java.util.Stack;
 
 // TODO: should really be called BinarySearchTree since we have B-Trees
 public class SearchTree implements Tree {
-    private int size = 0;
-    private TreeNode root = TreeNode.nill;
+    protected int size = 0;
+    protected TreeNode root = TreeNode.nill;
 
     @Override
     public TreeNode find(int element) {

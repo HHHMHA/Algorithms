@@ -102,7 +102,7 @@ class TreeNodeTest {
         assertFalse(node.isLeftChild(), "A node with nil parent should not be identified as a left child.");
     }
 
-        @Test
+    @Test
     void isChildWhenChild() {
         TreeNode parent = new TreeNode(10);
         TreeNode leftChild = new TreeNode(5);
@@ -133,5 +133,18 @@ class TreeNodeTest {
         TreeNode node = new TreeNode(10);
 
         assertFalse(TreeNode.nill.isChild(node), "A node with nil parent should not be identified as a child.");
+    }
+
+    @Test
+    void hasPropertyValueTest() {
+        TreeNode node = new TreeNode(10);
+        node.setProperty(ColoredNode.Black());
+
+        assertTrue(node.hasPropertyValue(ColoredNode.Black()));
+        assertFalse(node.hasPropertyValue(ColoredNode.Red()));
+
+        node.setProperty(ColoredNode.Red());
+        assertFalse(node.hasPropertyValue(ColoredNode.Black()));
+        assertTrue(node.hasPropertyValue(ColoredNode.Red()));
     }
 }

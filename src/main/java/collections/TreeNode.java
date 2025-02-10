@@ -1,5 +1,7 @@
 package collections;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TreeNode {
@@ -7,6 +9,7 @@ public class TreeNode {
 
     private final Integer value;
     private TreeNode left, right, parent;
+    private final List<NodeProperty> properties = new ArrayList<>();
 
     private TreeNode() {
         left = null;
@@ -88,5 +91,20 @@ public class TreeNode {
 
     public boolean isChild(TreeNode childNode) {
         return this != TreeNode.nill && childNode != TreeNode.nill && (childNode.equals(this.getLeft()) || childNode.equals(this.getRight()));
+    }
+
+    /**
+     * Assumes NodeProperty implementations check for correct class in equals method
+     *
+     * @param value the value to check if it exists in one of the properties
+     * @return What do you think this will return bro!
+     */
+    public boolean hasPropertyValue(NodeProperty value) {
+        return this.properties.stream().anyMatch(e -> e.equals(value));
+    }
+
+    public void setProperty(NodeProperty property) {
+        this.properties.removeIf(p -> p.getClass() == property.getClass());
+        this.properties.add(property);
     }
 }

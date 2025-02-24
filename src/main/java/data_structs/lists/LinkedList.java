@@ -1,6 +1,6 @@
 package data_structs.lists;
 
-import data_structs.trees.node.Node;
+import data_structs.common.Node;
 
 public class LinkedList implements List {
     private Node head = Node.nill;

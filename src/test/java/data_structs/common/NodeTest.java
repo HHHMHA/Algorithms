@@ -1,9 +1,9 @@
-package data_structs.trees;
+package data_structs.common;
 
-import data_structs.trees.node.Node;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class NodeTest {
     @Test
@@ -14,7 +14,7 @@ class NodeTest {
 
     // Also making the nill shared means we can use it only for knowing we can't move anymore
     @Test
-    void nillLinkedTonNull() {
+    void nillLinkedToNull() {
         Node node = Node.nill;
         assertNull( node.getNext() );
         assertNull( node.getPrevious() );

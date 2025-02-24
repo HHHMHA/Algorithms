@@ -40,7 +40,7 @@ public class Min {
         if ( order == 1 )
             return Arrays.stream( array ).min().getAsInt();
 
-        return getOrderedStatistic( 0, order - 1 );
+        return getOrderedStatistic( 0, array.length - 1 );
     }
 
     private int getOrderedStatistic( int left, int right ) {

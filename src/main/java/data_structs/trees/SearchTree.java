@@ -115,6 +115,7 @@ public class SearchTree implements Tree {
     // TODO: move to TreeNode
     private void setParent(TreeNode node, TreeNode parent) {
         node.setParent(parent);
+        if (parent == TreeNode.nill) return;
         if (parent.getValue() < node.getValue()) {
             parent.setRight(node);
         } else {

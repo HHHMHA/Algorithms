@@ -1,4 +1,4 @@
-package data_structs.trees.node;
+package data_structs.common;
 
 public class Node {
     public static final Node nill = new Node();

@@ -133,7 +133,7 @@ public class SearchTree implements Tree {
         return parent;
     }
 
-    private boolean isDuplicate(int element) {
+    protected boolean isDuplicate(int element) {
         return find(element) != TreeNode.nill;
     }
 

@@ -2,16 +2,14 @@ package data_structs.trees;
 
 import data_structs.trees.node.NodeProperty;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class TreeNode {
     public static final TreeNode nill = new TreeNode();
 
     private final Integer value;
     private TreeNode left, right, parent;
-    private final List<NodeProperty> properties = new ArrayList<>();
+    private final Map<Class<? extends NodeProperty>, NodeProperty> properties = new HashMap<>();
 
     private TreeNode() {
         left = null;
@@ -100,11 +98,12 @@ public class TreeNode {
      * @return What do you think this will return bro!
      */
     public boolean hasPropertyValue(NodeProperty value) {
-        return this.properties.stream().anyMatch(e -> e.equals(value));
+        return Optional.ofNullable(properties.get(value.getClass()))
+                       .map(prop -> prop.equals(value))
+                       .orElse(false);
     }
 
     public void setProperty(NodeProperty property) {
-        this.properties.removeIf(p -> p.getClass() == property.getClass());
-        this.properties.add(property);
+        properties.put(property.getClass(), property);
     }
 }

@@ -78,14 +78,12 @@ public class TreeNode {
     }
 
     public boolean isRightChild() {
-        parent = this.getParent();
         if (parent == TreeNode.nill) return false;
 
         return parent.getRight().equals(this);
     }
 
     public boolean isLeftChild() {
-        parent = this.getParent();
         if (parent == TreeNode.nill) return false;
 
         return parent.getLeft().equals(this);

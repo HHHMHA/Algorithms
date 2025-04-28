@@ -20,30 +20,13 @@ public class RBTree extends SearchTree {
         }
 
         ++size;
-//        TreeNode parent = getNewParent(element);
-//
-//        setParent(node, parent);
+        // Case 1 no violations
+        TreeNode parent = getNewParent(element);
+
+        setParent(node, parent);
+        node.setProperty(ColoredNode.Red());
     }
 //
-//    // TODO: move to TreeNode
-//    private void setParent(TreeNode node, TreeNode parent) {
-//        node.setParent(parent);
-//        if (parent.getValue() < node.getValue()) {
-//            parent.setRight(node);
-//        } else {
-//            parent.setLeft(node);
-//        }
-//    }
-//
-//    private TreeNode getNewParent(int element) {
-//        var parent = TreeNode.nill;
-//        var target = root;
-//        while (target != TreeNode.nill) {
-//            parent = target;
-//            target = moveTowards(element, target);
-//        }
-//        return parent;
-//    }
 //
 //    @Override
 //    public TreeNode delete(int element) {

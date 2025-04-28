@@ -8,6 +8,8 @@ public class ColoredNode implements NodeProperty {
     public Color getColor() {
         return color;
     }
+    private static final ColoredNode BLACK = new ColoredNode(Color.BLACK);
+    private static final ColoredNode RED = new ColoredNode(Color.RED);
 
     private final Color color;
 
@@ -34,10 +36,10 @@ public class ColoredNode implements NodeProperty {
     }
 
     public static ColoredNode Black() {
-        return new ColoredNode(Color.BLACK);
+        return ColoredNode.BLACK;
     }
 
     public static ColoredNode Red() {
-        return new ColoredNode(Color.RED);
+        return ColoredNode.RED;
     }
 }

@@ -113,7 +113,7 @@ public class SearchTree implements Tree {
     }
 
     // TODO: move to TreeNode
-    private void setParent(TreeNode node, TreeNode parent) {
+    protected void setParent(TreeNode node, TreeNode parent) {
         node.setParent(parent);
         if (parent == TreeNode.nill) return;
         if (parent.getValue() < node.getValue()) {
@@ -123,7 +123,7 @@ public class SearchTree implements Tree {
         }
     }
 
-    private TreeNode getNewParent(int element) {
+    protected TreeNode getNewParent(int element) {
         var parent = TreeNode.nill;
         var target = root;
         while (target != TreeNode.nill) {

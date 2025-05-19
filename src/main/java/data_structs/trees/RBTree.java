@@ -20,11 +20,20 @@ public class RBTree extends SearchTree {
         }
 
         ++size;
-        // Case 1 no violations
+        // Case 0 no violations
         TreeNode parent = getNewParent(element);
 
         setParent(node, parent);
         node.setProperty(ColoredNode.Red());
+
+        var uncle = node.getUncle();
+        if (uncle == TreeNode.nill) return;
+
+        // Case 1 Uncle and parent red
+        if (uncle.hasPropertyValue(ColoredNode.Red()) && parent.hasPropertyValue(ColoredNode.Red())) {
+            uncle.setProperty(ColoredNode.Black());
+            parent.setProperty(ColoredNode.Black());
+        }
     }
 //
 //

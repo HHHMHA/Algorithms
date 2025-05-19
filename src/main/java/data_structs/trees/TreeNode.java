@@ -106,4 +106,9 @@ public class TreeNode {
     public void setProperty(NodeProperty property) {
         properties.put(property.getClass(), property);
     }
+
+    public TreeNode getUncle() {
+        if ( parent == nill || parent.getParent() == nill ) return nill;
+        return parent.isLeftChild() ? parent.getParent().getRight() : parent.getParent().getLeft();
+    }
 }

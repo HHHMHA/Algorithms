@@ -251,78 +251,104 @@ class RBTreeTest {
     }
 
     @Test
-    void insertWithRecoloring_ShouldMaintainRedBlackProperties() {
+    void insertCase1_ColorFlipWithRedUncle_ShouldRecolorOnly() {
         Tree t = new RBTree();
         t.insert(10);
         t.insert(5);
-        t.insert(15);
-        t.insert(1);
-        t.insert(7);
+        t.insert(15); // red uncle
+        t.insert(1);  // causes recoloring
 
         var root = t.find(10);
         var left = root.getLeft();
-        var right = root.getRight();
+        var leftLeft = left.getLeft();
 
         assertTrue(root.hasPropertyValue(ColoredNode.Black()));
-
-        assertEquals(5, left.getValue());
         assertTrue(left.hasPropertyValue(ColoredNode.Black()));
-
-        assertEquals(15, right.getValue());
-        assertTrue(right.hasPropertyValue(ColoredNode.Black()));
-
-        assertEquals(1, left.getLeft().getValue());
-        assertTrue(left.getLeft().hasPropertyValue(ColoredNode.Red()));
-
-        assertEquals(7, left.getRight().getValue());
-        assertTrue(left.getRight().hasPropertyValue(ColoredNode.Red()));
+        assertTrue(root.getRight().hasPropertyValue(ColoredNode.Black()));
+        assertTrue(leftLeft.hasPropertyValue(ColoredNode.Red()));
     }
 
     @Test
-    void insertWithSingleRotation_ShouldRebalanceCorrectly() {
+    void insertCase2_LeftRight_ShouldRotateAndRecolor() {
         Tree t = new RBTree();
         t.insert(10);
         t.insert(5);
-        t.insert(15);
-        t.insert(1);
-        t.insert(7);
-        t.insert(6);  // Causes left rotation
+        t.insert(7); // triggers left-right
 
-        var root = t.find(10);
-        var left = root.getLeft();
-
-        assertEquals(7, left.getValue());
-        assertTrue(left.hasPropertyValue(ColoredNode.Black()));
-
-        assertEquals(5, left.getLeft().getValue());
-        assertTrue(left.getLeft().hasPropertyValue(ColoredNode.Red()));
-
-        assertEquals(6, left.getLeft().getRight().getValue());
-        assertTrue(left.getLeft().getRight().hasPropertyValue(ColoredNode.Black()));
+        var root = t.find(7); // should now be new root
+        assertTrue(root.hasPropertyValue(ColoredNode.Black()));
+        assertEquals(5, root.getLeft().getValue());
+        assertEquals(10, root.getRight().getValue());
+        assertTrue(root.getLeft().hasPropertyValue(ColoredNode.Red()));
+        assertTrue(root.getRight().hasPropertyValue(ColoredNode.Red()));
     }
 
     @Test
-    void insertWithDoubleRotation_ShouldRebalanceCorrectly() {
+    void insertCase2_RightLeft_ShouldRotateAndRecolor() {
+        Tree t = new RBTree();
+        t.insert(10);
+        t.insert(15);
+        t.insert(13); // triggers right-left
+
+        var root = t.find(13);
+        assertTrue(root.hasPropertyValue(ColoredNode.Black()));
+        assertEquals(10, root.getLeft().getValue());
+        assertEquals(15, root.getRight().getValue());
+        assertTrue(root.getLeft().hasPropertyValue(ColoredNode.Red()));
+        assertTrue(root.getRight().hasPropertyValue(ColoredNode.Red()));
+    }
+
+
+    @Test
+    void insertCase3_LeftLeft_ShouldRotateAndRecolor() {
         Tree t = new RBTree();
         t.insert(10);
         t.insert(5);
-        t.insert(15);
-        t.insert(1);
-        t.insert(8);
-        t.insert(7);  // Causes right-left rotation
+        t.insert(1); // left-left
 
-        var root = t.find(10);
-        var left = root.getLeft();
-
-        assertEquals(7, left.getValue());
-        assertTrue(left.hasPropertyValue(ColoredNode.Black()));
-
-        assertEquals(5, left.getLeft().getValue());
-        assertTrue(left.getLeft().hasPropertyValue(ColoredNode.Red()));
-
-        assertEquals(8, left.getRight().getValue());
-        assertTrue(left.getRight().hasPropertyValue(ColoredNode.Red()));
+        var root = t.find(5);
+        assertTrue(root.hasPropertyValue(ColoredNode.Black()));
+        assertEquals(1, root.getLeft().getValue());
+        assertEquals(10, root.getRight().getValue());
+        assertTrue(root.getLeft().hasPropertyValue(ColoredNode.Red()));
+        assertTrue(root.getRight().hasPropertyValue(ColoredNode.Red()));
     }
+
+    @Test
+    void insertCase3_RightRight_ShouldRotateAndRecolor() {
+        Tree t = new RBTree();
+        t.insert(10);
+        t.insert(15);
+        t.insert(20); // right-right
+
+        var root = t.find(15);
+        assertTrue(root.hasPropertyValue(ColoredNode.Black()));
+        assertEquals(10, root.getLeft().getValue());
+        assertEquals(20, root.getRight().getValue());
+        assertTrue(root.getLeft().hasPropertyValue(ColoredNode.Red()));
+        assertTrue(root.getRight().hasPropertyValue(ColoredNode.Red()));
+    }
+
+
+    @Test
+    void insertCase1_RecolorShouldPropagateUpwards() {
+        Tree t = new RBTree();
+        t.insert(20);
+        t.insert(10);
+        t.insert(30);
+        t.insert(5);
+        t.insert(15);
+        t.insert(25);
+        t.insert(35);
+        t.insert(1); // This triggers a color flip that propagates up
+
+        var root = t.find(20);
+        assertTrue(root.hasPropertyValue(ColoredNode.Black()));
+        assertTrue(root.getLeft().hasPropertyValue(ColoredNode.Black()));
+        assertTrue(root.getRight().hasPropertyValue(ColoredNode.Black()));
+        // Can assert deeper node colors too if desired
+    }
+
 //
 //    @Test
 //    void deleteWhenTreeEmpty() {

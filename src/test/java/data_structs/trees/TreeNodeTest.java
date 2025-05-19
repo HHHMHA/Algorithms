@@ -149,4 +149,72 @@ class TreeNodeTest {
         assertFalse(node.hasPropertyValue(ColoredNode.Black()));
         assertTrue(node.hasPropertyValue(ColoredNode.Red()));
     }
+
+    @Test
+    void getUncleWhenNoParent() {
+        TreeNode node = new TreeNode(10);
+        node.setParent(TreeNode.nill);
+        assertEquals(TreeNode.nill, node.getUncle(), "Node without parent should return nil uncle.");
+    }
+
+    @Test
+    void getUncleWhenNoGrandparent() {
+        TreeNode parent = new TreeNode(20);
+        parent.setParent(TreeNode.nill);
+
+        TreeNode node = new TreeNode(10);
+        node.setParent(parent);
+
+        assertEquals(TreeNode.nill, node.getUncle(), "Node without grandparent should return nil uncle.");
+    }
+
+    @Test
+    void getUncleWhenParentIsLeftChild() {
+        TreeNode grandparent = new TreeNode(30);
+        TreeNode parent = new TreeNode(20);
+        TreeNode uncle = new TreeNode(40);
+        TreeNode node = new TreeNode(10);
+
+        grandparent.setLeft(parent);
+        grandparent.setRight(uncle);
+        parent.setParent(grandparent);
+        uncle.setParent(grandparent);
+
+        node.setParent(parent);
+
+        assertEquals(uncle, node.getUncle(), "Uncle should be the right child of grandparent.");
+    }
+
+    @Test
+    void getUncleWhenParentIsRightChild() {
+        TreeNode grandparent = new TreeNode(30);
+        TreeNode parent = new TreeNode(40);
+        TreeNode uncle = new TreeNode(20);
+        TreeNode node = new TreeNode(50);
+
+        grandparent.setRight(parent);
+        grandparent.setLeft(uncle);
+        parent.setParent(grandparent);
+        uncle.setParent(grandparent);
+
+        node.setParent(parent);
+
+        assertEquals(uncle, node.getUncle(), "Uncle should be the left child of grandparent.");
+    }
+
+    @Test
+    void getUncleWhenUncleIsNill() {
+        TreeNode grandparent = new TreeNode(30);
+        TreeNode parent = new TreeNode(20);
+        TreeNode node = new TreeNode(10);
+
+        grandparent.setLeft(parent); // parent is left child
+        grandparent.setRight(TreeNode.nill); // no uncle
+
+        parent.setParent(grandparent);
+        node.setParent(parent);
+
+        assertEquals(TreeNode.nill, node.getUncle(), "Should return nil when there is no uncle.");
+    }
+
 }

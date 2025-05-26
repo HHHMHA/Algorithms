@@ -27,12 +27,38 @@ public class RBTree extends SearchTree {
         node.setProperty(ColoredNode.Red());
 
         var uncle = node.getUncle();
-        if (uncle == TreeNode.nill) return;
 
         // Case 1 Uncle and parent red
-        if (uncle.hasPropertyValue(ColoredNode.Red()) && parent.hasPropertyValue(ColoredNode.Red())) {
+        if (uncle != TreeNode.nill && uncle.hasPropertyValue(ColoredNode.Red()) && parent.hasPropertyValue(ColoredNode.Red())) {
             uncle.setProperty(ColoredNode.Black());
             parent.setProperty(ColoredNode.Black());
+            // TODO: recursive case and color grand parent red (will implement when I reach the test)
+            return;
+        }
+
+        // Case 2: Left-Right
+        TreeNode grandparent = parent.getParent();
+        if (grandparent == TreeNode.nill) {
+            return; // No grandparent, so no further fix-up needed now
+        }
+        // Case 2: Left-Right (triangle)
+        if (parent == grandparent.getLeft() && node == parent.getRight()) {
+            leftRotate(parent); // Turn it into Left-Left
+            node = node.getLeft(); // After rotation, new current node
+        }
+
+        // Case 2 (continued): Left-Left
+        if (node.getParent() == grandparent.getLeft()) {
+            rightRotate(grandparent);
+
+            TreeNode newRoot = node.getParent();
+            newRoot.setProperty(ColoredNode.Black());
+            newRoot.getLeft().setProperty(ColoredNode.Red());
+            newRoot.getRight().setProperty(ColoredNode.Red());
+
+            if (grandparent == root) {
+                root = newRoot;
+            }
         }
     }
 //
